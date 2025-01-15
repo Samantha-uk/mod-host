@@ -45,14 +45,6 @@
 #define MOD_MONITOR_STEREO_HANDLING
 #endif
 
-#if defined(_DARKGLASS_DEVICE_PABLITO)
-#define MOD_MONITOR_VOLUME_MUTE -60.f
-#define MOD_MONITOR_VOLUME_WAIT 0.02f
-#else
-#define MOD_MONITOR_VOLUME_MUTE -30.f
-#define MOD_MONITOR_VOLUME_WAIT 0.03f
-#endif
-
 #if defined(_MOD_DEVICE_DUOX) || defined(_MOD_DEVICE_DWARF)
 #define MOD_IO_PROCESSING_ENABLED
 #endif
@@ -519,7 +511,25 @@ int jack_initialize(jack_client_t* client, const char* load_init)
 
     const char* const ourclientname = jack_get_client_name(client);
 
-   #ifdef _MOD_DEVICE_DWARF
+   #if defined(_DARKGLASS_DEVICE_PABLITO)
+    snprintf(ourportname, MAX_CHAR_BUF_SIZE, "%s:out_1", ourclientname);
+    jack_connect(client, ourportname, "system:playback_1");
+
+    snprintf(ourportname, MAX_CHAR_BUF_SIZE, "%s:out_2", ourclientname);
+    jack_connect(client, ourportname, "system:playback_2");
+
+    snprintf(ourportname, MAX_CHAR_BUF_SIZE, "%s:out_3", ourclientname);
+    jack_connect(client, ourportname, "system:playback_3");
+
+    snprintf(ourportname, MAX_CHAR_BUF_SIZE, "%s:out_4", ourclientname);
+    jack_connect(client, ourportname, "system:playback_4");
+
+    snprintf(ourportname, MAX_CHAR_BUF_SIZE, "%s:out_5", ourclientname);
+    jack_connect(client, ourportname, "system:playback_7");
+
+    snprintf(ourportname, MAX_CHAR_BUF_SIZE, "%s:out_6", ourclientname);
+    jack_connect(client, ourportname, "system:playback_8");
+   #elif defined(_MOD_DEVICE_DWARF)
     snprintf(ourportname, MAX_CHAR_BUF_SIZE, "%s:out_2", ourclientname);
     jack_connect(client, ourportname, "system:playback_1");
 
